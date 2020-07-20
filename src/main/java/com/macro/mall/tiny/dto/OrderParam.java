@@ -1,0 +1,19 @@
+package com.macro.mall.tiny.dto;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class OrderParam {
+    //收货地址id
+    private Long memberReceiveAddressId;
+    //优惠卷id
+    private Long couponId;
+    //使用的积分数
+    private Integer useIntegration;
+    //支付方式
+    private Integer payType;
+}
