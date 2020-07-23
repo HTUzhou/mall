@@ -94,6 +94,13 @@
     from ums_admin
     where id = #{id,jdbcType=BIGINT}
   </select>
+<!--  自定义模糊查询-->
+  <select id="selectLikeUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ums_admin
+    where username like "%"#{username}"%"
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from ums_admin
     where id = #{id,jdbcType=BIGINT}

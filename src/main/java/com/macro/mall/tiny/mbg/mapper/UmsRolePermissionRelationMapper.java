@@ -2,8 +2,9 @@ package com.macro.mall.tiny.mbg.mapper;
 
 import com.macro.mall.tiny.mbg.model.UmsRolePermissionRelation;
 import com.macro.mall.tiny.mbg.model.UmsRolePermissionRelationExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UmsRolePermissionRelationMapper {
     int countByExample(UmsRolePermissionRelationExample example);

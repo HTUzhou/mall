@@ -2,10 +2,10 @@ package com.macro.mall.tiny.service.impl;
 
 import com.macro.mall.tiny.common.utils.JwtTokenUtil;
 import com.macro.mall.tiny.dao.UmsAdminRoleRelationDao;
+import com.macro.mall.tiny.dto.AsideListResult;
+import com.macro.mall.tiny.mbg.mapper.AsideListMapper;
 import com.macro.mall.tiny.mbg.mapper.UmsAdminMapper;
-import com.macro.mall.tiny.mbg.model.UmsAdmin;
-import com.macro.mall.tiny.mbg.model.UmsAdminExample;
-import com.macro.mall.tiny.mbg.model.UmsPermission;
+import com.macro.mall.tiny.mbg.model.*;
 import com.macro.mall.tiny.service.UmsAdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     private UserDetailsService userDetailsService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private AsideListMapper asideListMapper;
 
     /**
      * 用于密码的验证
@@ -121,5 +124,78 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         List<UmsPermission> permissionList = adminRoleRelationDao.getPermissionList(adminId);
         System.out.println(permissionList);
         return permissionList;
+    }
+
+    @Override
+    public List<AsideListResult> getAsideList() {
+        List<AsideList> asideLists = asideListMapper.selectByExample(new AsideListExample());
+        List<AsideListResult> asideListResults = new ArrayList<>();
+        for (AsideList asideList : asideLists) {
+            if (asideList.getParentid() == 0) {
+                AsideListResult asideListResult = new AsideListResult(asideList.getId(), asideList.getAuthname(), asideList.getParentid(), asideList.getPath(), new ArrayList<>());
+                asideListResults.add(asideListResult);
+            }
+        }
+        for (AsideListResult asideListResult : asideListResults) {
+            for (AsideList asideList : asideLists) {
+                if (asideList.getParentid() == asideListResult.getId()) {
+                    asideListResult.getChildren().add(asideList);
+                }
+            }
+        }
+        return asideListResults;
+    }
+
+    @Override
+    public List<UmsAdmin> getUsers() {
+        List<UmsAdmin> umsAdmins = adminMapper.selectByExample(new UmsAdminExample());
+        return umsAdmins;
+    }
+
+    @Override
+    public int modifyStatus(Long id, String status) {
+        int count = 0;
+        if (status.equals("true")) {
+            UmsAdmin admin = adminMapper.selectByPrimaryKey(id);
+            admin.setStatus(1);
+            count = adminMapper.updateByPrimaryKey(admin);
+        } else {
+            UmsAdmin admin = adminMapper.selectByPrimaryKey(id);
+            admin.setStatus(0);
+            count = adminMapper.updateByPrimaryKey(admin);
+        }
+        return count;
+    }
+
+    @Override
+    public List<UmsAdmin> getUsersLikeName(String username) {
+//        UmsAdminExample example = new UmsAdminExample();
+//        example.createCriteria().andUsernameLike(username);
+//        List<UmsAdmin> umsAdmins = adminMapper.selectByExample(example);
+        List<UmsAdmin> umsAdmins = adminMapper.selectLikeUsername(username);
+        System.out.println("---------------------------------");
+        System.out.println(username);
+        System.out.println("模糊查询的数据为：" + umsAdmins);
+        return umsAdmins;
+    }
+
+    @Override
+    public UmsAdmin getUserById(Long id) {
+        UmsAdmin admin = adminMapper.selectByPrimaryKey(id);
+        return admin;
+    }
+
+    @Override
+    public int modifyUser(Long id, String email) {
+        UmsAdmin admin = adminMapper.selectByPrimaryKey(id);
+        admin.setEmail(email);
+        int i = adminMapper.updateByPrimaryKey(admin);
+        return i;
+    }
+
+    @Override
+    public int deleteUser(Long id) {
+        int i = adminMapper.deleteByPrimaryKey(id);
+        return i;
     }
 }

@@ -60,8 +60,8 @@ mybatis:
 aliyun:
   oss:
     endpoint: oss-cn-beijing.aliyuncs.com #oss对外服务的访问域名
-    accessKeyId: LTAI4GGoqkxcSzPgaPcZs2TD #访问身份验证中用到的用户标识
-    accessKeySecret: wsHA14IzUTWRCcBLvWe7v315QFmgxY #用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    accessKeyId: LTAI4GGoqkxcSz #访问身份验证中用到的用户标识
+    accessKeySecret: wsHA14IzUTWRCcBL #用户用于加密签名字符串和oss用来验证签名字符串的密钥
     bucketName: zyt-mall #oss的存储空间
     policy:
       expire: 300 #签名有效期（S）

@@ -61,6 +61,10 @@
         <table tableName="ums_admin_permission_relation">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
+<!--     侧边栏表-->
+        <table tableName="aside_list">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
     </context>
 
 </generatorConfiguration>

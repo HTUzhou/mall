@@ -1,5 +1,7 @@
 package com.macro.mall.tiny.service;
 
+import com.macro.mall.tiny.dto.AsideListResult;
+import com.macro.mall.tiny.mbg.model.AsideList;
 import com.macro.mall.tiny.mbg.model.UmsAdmin;
 import com.macro.mall.tiny.mbg.model.UmsPermission;
 
@@ -37,4 +39,53 @@ public interface UmsAdminService {
      * @return
      */
     List<UmsPermission> getPermissionList(Long adminId);
+
+    /**
+     * 获取侧边栏信息
+     * @return
+     */
+    List<AsideListResult> getAsideList();
+
+    /**
+     * 获取所有用户信息
+     * @return
+     */
+    List<UmsAdmin> getUsers();
+
+    /**
+     * 根据id修改用户的状态
+     * @param id
+     * @param status
+     * @return
+     */
+    int modifyStatus(Long id, String status);
+
+    /**
+     * 根据参数username，进行模糊查询
+     * @param username
+     * @return
+     */
+    List<UmsAdmin> getUsersLikeName(String username);
+
+    /**
+     * 通过id获得对应的用户
+     * @param id
+     * @return
+     */
+    UmsAdmin getUserById(Long id);
+
+    /**
+     * 通过id修改邮箱
+     * @param id
+     * @param email
+     * @return
+     */
+    int modifyUser(Long id, String email);
+
+    /**
+     * 通过id删除用户
+     * @param id
+     * @return
+     */
+    int deleteUser(Long id);
 }

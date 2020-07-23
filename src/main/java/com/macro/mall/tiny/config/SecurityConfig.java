@@ -67,8 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS)
                 .permitAll()
                 .anyRequest() // 其他请求需要进行验证
-                .permitAll();
-//                .authenticated();
+//                .permitAll();
+                .authenticated();
         //禁用缓存
         http.headers().cacheControl();
         //添加JWT filter

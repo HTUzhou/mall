@@ -2,8 +2,9 @@ package com.macro.mall.tiny.mbg.mapper;
 
 import com.macro.mall.tiny.mbg.model.UmsAdmin;
 import com.macro.mall.tiny.mbg.model.UmsAdminExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UmsAdminMapper {
     int countByExample(UmsAdminExample example);
@@ -27,4 +28,7 @@ public interface UmsAdminMapper {
     int updateByPrimaryKeySelective(UmsAdmin record);
 
     int updateByPrimaryKey(UmsAdmin record);
+
+//    模糊查询
+    List<UmsAdmin> selectLikeUsername(@Param("username") String username);
 }
